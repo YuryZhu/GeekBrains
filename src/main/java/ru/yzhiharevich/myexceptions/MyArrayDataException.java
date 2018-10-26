@@ -1,4 +1,8 @@
 package ru.yzhiharevich.myexceptions;
 
-public class MyArrayDataException {
+public class MyArrayDataException extends Exception {
+
+    public MyArrayDataException(String msg) {
+        super(msg);
+    }
 }
