@@ -1,4 +1,4 @@
-package ru.yzhiharevich.geekb;
+package ru.yzhiharevich.marathon_lesson1;
 
 public class SportsmanA1 extends Members {
     public SportsmanA1(String name) {

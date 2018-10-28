@@ -1,4 +1,4 @@
-package ru.yzhiharevich.myexceptions;
+package ru.yzhiharevich.myexceptions_lesson2;
 
 public class StringFinder {
         public static void main(String[] args) {

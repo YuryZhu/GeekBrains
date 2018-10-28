@@ -1,4 +1,4 @@
-package ru.yzhiharevich.enumlesson;
+package ru.yzhiharevich.enum_additional_lesson2;
 
 public enum DayOfWeeks {
     MONDAY("Понедельник", 40), Tuesday("Вторник", 32),

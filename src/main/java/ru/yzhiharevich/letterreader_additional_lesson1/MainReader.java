@@ -1,4 +1,4 @@
-package ru.yzhiharevich.letterreader;
+package ru.yzhiharevich.letterreader_additional_lesson1;
 
 public class MainReader {
 

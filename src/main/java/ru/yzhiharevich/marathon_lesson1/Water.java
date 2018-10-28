@@ -1,4 +1,4 @@
-package ru.yzhiharevich.geekb;
+package ru.yzhiharevich.marathon_lesson1;
 
 
 public class Water extends Obstacle {

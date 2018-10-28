@@ -1,4 +1,4 @@
-package ru.yzhiharevich.enumlesson;
+package ru.yzhiharevich.enum_additional_lesson2;
 
 public class DayOfWeekMain {
 
