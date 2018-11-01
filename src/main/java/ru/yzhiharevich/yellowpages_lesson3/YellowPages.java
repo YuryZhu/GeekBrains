@@ -1,6 +1,5 @@
 package ru.yzhiharevich.yellowpages_lesson3;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class YellowPages {
