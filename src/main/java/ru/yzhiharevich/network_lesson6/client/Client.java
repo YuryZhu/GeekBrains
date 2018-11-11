@@ -7,9 +7,11 @@ import java.net.*;
 import java.util.Scanner;
 
 class Client {
-    public static void main(String args[]) {
-        DataInputStream in;
-        DataOutputStream out;
+    DataInputStream in;
+    DataOutputStream out;
+
+    public void clientStart() {
+
         Socket socket = null;
         final String IP_ADRESS = "localhost";
         final int PORT = 3128;
@@ -17,21 +19,65 @@ class Client {
             socket = new Socket(IP_ADRESS, PORT);
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
-            while (true) {
-                System.out.print("Input your message: ");
-                Scanner sb = new Scanner(System.in);
-                String str = sb.nextLine();
-                out.writeUTF(str);
-                String strIn = in.readUTF();
-                System.out.println(strIn);
-                if(str.equals("/end")) break;
-                if(strIn.equals("/end")) break;
-            }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String strIn = null;
+                        try {
+                            strIn = in.readUTF();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(strIn);
+                    }
+                }).start();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (true) {
+                            String str;
+                            try {
+                                System.out.print("Input your message: ");
+                                Scanner sb = new Scanner(System.in);
+                                str = sb.nextLine();
+                                out.writeUTF(str);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
                 socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void readStream() {
+        String strIn = null;
+        try {
+            strIn = in.readUTF();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(strIn);
+
+    }
+
+    public void outStream() {
+        while (true) {
+            String str;
+            try {
+                System.out.print("Input your message: ");
+                Scanner sb = new Scanner(System.in);
+                str = sb.nextLine();
+                out.writeUTF(str);
             } catch (IOException e) {
                 e.printStackTrace();
             }
