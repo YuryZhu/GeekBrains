@@ -43,7 +43,7 @@ public class ClientHandler {
                                     server.subscribe(ClientHandler.this);
                                     break;
                                 } else {
-                                    sendMsg("Неверный логин/пароль иди данный логик уже используется!");
+                                    sendMsg("Неверный логин/пароль или данный логин уже используется!");
                                 }
                             }
                         }

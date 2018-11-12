@@ -79,7 +79,7 @@ public class Controller {
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
 
-            new Thread(new Runnable() {
+            Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -113,7 +113,7 @@ public class Controller {
                         }
                     }
                 }
-            }).start();
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
