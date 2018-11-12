@@ -1,0 +1,91 @@
+#mainPanel{
+    -fx-background-color: linear-gradient(to top right, #7abcff 0%,#60abf8 44%,#4096ee 100%);
+}
+#scrollPane{
+    -fx-background-color: transparent;
+}
+#scrollPane >.viewport{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #004172;
+    -fx-background-radius: 5em;
+}
+
+.hbox{
+    -fx-background-insets: 15;
+    -fx-padding: 12px;
+}
+.hboxMain {
+     -fx-background-color: #004172;
+}
+#textField {
+    -fx-background-insets: -15;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.label {
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+     -fx-font-size: 12px;
+    -fx-text-fill: #0078d7;
+    -fx-padding: 5 10 5 10;
+}
+#btn1 {
+         -fx-background-color: transparent;
+         -fx-font-size: 10pt;
+         -fx-text-fill: white;
+         -fx-background-radius:0em;
+     }
+
+#btn1:hover {
+    -fx-background-color: #005172;
+    -fx-background-radius:0em;
+
+}
+
+#btn1:pressed, .button:default:hover:pressed {
+  -fx-background-color: #60abf8;
+  -fx-text-fill: #1d1d1d;
+}
+#btnClose{
+-fx-background-color: transparent;
+    -fx-background-radius: 50%;
+    -fx-text-fill: #0078d7;
+    -fx-background-radius:0em;
+
+}
+
+#btnClose:hover{
+    -fx-background-color: #005172;
+}
+.textFlow{
+    -fx-background-color: linear-gradient(to top right, #ffa84c 0%,#ff7b0d 100%);
+     -fx-background-radius: 1em;
+     -fx-padding: 5 10 5 10;
+}
+
+.textFlowFlipped{
+    -fx-background-color: linear-gradient(to top right, #ff7f50, #6a5acd);
+    -fx-background-radius: 1em;
+    -fx-padding: 5 10 5 10;
+}
