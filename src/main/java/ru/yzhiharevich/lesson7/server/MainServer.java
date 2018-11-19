@@ -1,12 +1,15 @@
 package ru.yzhiharevich.lesson7.server;
 
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.Vector;
 
-public class MainServer {    Vector<ClientHandler> clients;
+public class MainServer {
+    Vector<ClientHandler> clients;
 
     public MainServer() throws SQLException {
 
@@ -47,9 +50,11 @@ public class MainServer {    Vector<ClientHandler> clients;
     }
 
     // метод для рассылки сообщения всем клиентам
-    public void broadCastMsg(String msg) {
+    public void broadcastMsg(ClientHandler from, String msg) {
         for (ClientHandler o : clients) {
-            o.sendMsg(msg);
+            if (!o.checkBlackList(from.getNick())) {
+                o.sendMsg(msg);
+            }
         }
     }
 
@@ -62,20 +67,38 @@ public class MainServer {    Vector<ClientHandler> clients;
         return false;
     }
 
+    public void broadcastClientList() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("/clientlist ");
+        for (ClientHandler o : clients) {
+            sb.append(o.getNick() + " ");
+        }
+        String out = sb.toString();
+        for (ClientHandler o : clients) {
+            o.sendMsg(out);
+        }
+    }
+
     // подписываем клиента и добавляем его в список клиентов
     public void subscribe(ClientHandler client) {
         clients.add(client);
+        broadcastClientList();
     }
 
     // отписываем клиента и удаляем его из списка клиентов
     public void unsubscribe(ClientHandler client) {
         clients.remove(client);
+        broadcastClientList();
     }
 
-    public void sentPrivateMsg(String nick, String msg) {
+    public void sentPrivateMsg(ClientHandler from, String nickTo, String msg) {
         for (ClientHandler o : clients) {
-            if (o.getNick().equals(nick))
-                o.sendMsg(msg);
+            if (o.getNick().equals(nickTo)) {
+                o.sendMsg("from " + from.getNick() + ": " + msg);
+                from.sendMsg("to " + nickTo + ": " + msg);
+                return;
+            }
         }
+        from.sendMsg("Клиент с ником " + nickTo + " не найден!");
     }
 }

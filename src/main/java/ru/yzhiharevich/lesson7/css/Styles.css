@@ -89,3 +89,52 @@
     -fx-background-radius: 1em;
     -fx-padding: 5 10 5 10;
 }
+#clientListScroll{
+    -fx-background-color: transparent;
+}
+#clientListScroll >.viewport{
+    -fx-background-color: transparent;
+}
+
+#clientListScroll .scroll-bar:vertical{
+    -fx-background-color:inherit;
+
+}
+
+#clientListScroll .scroll-bar:vertical .track{
+    -fx-background-color:transparent;
+    -fx-border-color:transparent;
+    -fx-background-radius: 0em;
+
+}
+#clientListScroll .scroll-bar:vertical .increment-button,
+#clientListScroll .scroll-bar:vertical .decrement-button{
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-padding:0 0 10 0;
+
+}
+
+#clientListScroll  .scroll-bar .increment-arrow,
+#clientListScroll  .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding:0;
+}
+#clientListScroll .scroll-bar:vertical .thumb {
+    -fx-background-color:transparent;
+
+}
+#clientListScroll:hover .scroll-bar:vertical .thumb{
+    -fx-background-color:rgba(0,0,0,0.6);
+    -fx-background-insets: 4, 0, 0;
+    -fx-background-radius: 2em;
+}
+
+
+#clientList{
+    -fx-background-color: linear-gradient(to top right, #7abcff 0%,#60abf8 44%,#4096ee 100%);
+}
+
+#blackList{
+    -fx-background-color: linear-gradient(to top right, #ff7f50 0%,#60abf8 44%,#ff7f50 100%);
+}

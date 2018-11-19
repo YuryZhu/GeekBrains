@@ -2,33 +2,51 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
 <?scenebuilder-stylesheet /css/Styles.css?>
 
-<?import javafx.scene.control.PasswordField?>
-<VBox fx:id="mainPanel" alignment="center" prefHeight="430.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.yzhiharevich.lesson7.client.Controller">
-    <stylesheets><URL value="@../css/Styles.css" /> </stylesheets>
-    <HBox fx:id="upperPanel">
-        <TextField HBox.hgrow="ALWAYS" promptText="Логин" fx:id="loginField"/>
-        <PasswordField promptText="Пароль" fx:id="passwordField" onAction="#tryToAuth"/>
-        <Button onAction="#tryToAuth" text="Войти"/>
+<VBox fx:id="mainPanel" alignment="center" prefHeight="380.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.yzhiharevich.lesson7.client.Controller">
+    <stylesheets>
+        <URL value="@../css/Styles.css" />
+    </stylesheets>
+    <HBox fx:id="upperPanel" managed="true" visible="true">
+        <TextField fx:id="loginField" promptText="Логин" HBox.hgrow="ALWAYS" />
+        <PasswordField fx:id="passwordField" onAction="#tryToAuth" promptText="Пароль" />
+        <Button onAction="#tryToAuth" text="Войти" />
     </HBox>
 
-    <HBox styleClass="hboxMain" >
-        <Label  fx:id="label" prefHeight="28.0" prefWidth="350.0"  text="Chat"  />
-        <Button fx:id="btnClose"  onAction="#closeAction" prefHeight="28.0" prefWidth="50.0" text="Exit" alignment="CENTER" />
+    <HBox styleClass="hboxMain">
+        <Label fx:id="label" prefHeight="30.0" prefWidth="460.0" text="Chat" />
+        <Button fx:id="btnClose" alignment="CENTER" onAction="#closeAction" prefHeight="28.0" prefWidth="50.0" text="Exit" />
     </HBox>
-    <ScrollPane fx:id="scrollPane">
-        <content>
-            <VBox fx:id="chatBox" alignment="TOP_RIGHT" prefHeight="362.0" prefWidth="380.0" />
-        </content>
-    </ScrollPane>
-    <HBox styleClass="hboxMain" fx:id="bottomPanel" managed="false" visible="false">
-        <TextField fx:id="textField" onAction="#sendMsg" prefHeight="38.0" prefWidth="337.0" promptText="Введите сообщение..." HBox.hgrow="ALWAYS" />
-        <Button fx:id="btn1" onAction="#sendMsg" prefHeight="38.0" prefWidth="50.0" text="Send" alignment="CENTER" />
+    <HBox styleClass="hboxMain1">
+        <VBox>
+            <ScrollPane fx:id="scrollPane">
+                <content>
+                    <VBox fx:id="chatBox" alignment="TOP_LEFT" prefHeight="310.0" prefWidth="372.0" />
+                </content>
+            </ScrollPane>
+            <HBox fx:id="bottomPanel" managed="false" styleClass="hboxMain" visible="false">
+                <TextField fx:id="textField" onAction="#sendMsg" prefHeight="38.0" prefWidth="330.0" promptText="Введите сообщение..." HBox.hgrow="ALWAYS" />
+                <Button fx:id="btn1" alignment="CENTER" onAction="#sendMsg" prefHeight="38.0" prefWidth="50.0" text="Send" />
+            </HBox>
+        </VBox>
+        <ScrollPane fx:id="clientListScroll">
+            <content>
+                <VBox alignment="CENTER_RIGHT" prefHeight="320.0" prefWidth="140.0">
+                    <Label fx:id="clientListLabel" prefHeight="30.0" prefWidth="100.0" text="Client List" />
+                    <ListView fx:id="clientList" onMouseClicked="#personalMessages"  managed="true" prefHeight="140.0" prefWidth="100.0" visible="true" />
+                    <Label fx:id="blackListLabel" managed="true" prefHeight="30.0" prefWidth="100.0" text="Black List" visible="true" />
+                    <ListView fx:id="blackList" managed="true" prefHeight="140.0" prefWidth="100.0" visible="true" />
+                </VBox>
+            </content>
+        </ScrollPane>
     </HBox>
+
 </VBox>

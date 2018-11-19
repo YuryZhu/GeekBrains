@@ -1,10 +1,10 @@
 package ru.yzhiharevich.lesson7.server;
 
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 // класс для работы к клиентами
 public class ClientHandler {
@@ -15,6 +15,7 @@ public class ClientHandler {
     private DataOutputStream out;
     private DataInputStream in;
     private String nick;
+    ArrayList<String> blackList;
 
     public ClientHandler(final MainServer server, final Socket socket) {
 
@@ -23,6 +24,7 @@ public class ClientHandler {
             this.socket = socket;
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
+            this.blackList = new ArrayList<>();
 
             new Thread(new Runnable() {
                 @Override
@@ -34,39 +36,39 @@ public class ClientHandler {
                             // если приходит сообщение начинающееся с /auth значит пользователь хочет авторизоваться
                             if (str.startsWith("/auth")) {
                                 String[] tokens = str.split(" ");
-                                // запрашиваем ник в БД
                                 String newNick = AuthService.getNickByLoginAndPass(tokens[1], tokens[2]);
-                                // если ответ не равен null отправляем ответ клиенту о том, что авторизация прошла успешно
-                                if (newNick != null & !server.isNickBusy(newNick)) {
-                                    sendMsg("/authok");
-                                    nick = newNick;
-                                    server.subscribe(ClientHandler.this);
-                                    break;
+                                if (newNick != null) {
+                                    if (!server.isNickBusy(newNick)) {
+                                        sendMsg("/authok");
+                                        nick = newNick;
+                                        server.subscribe(ClientHandler.this);
+                                        break;
+                                    } else {
+                                        sendMsg("Учетная запись уже используется!");
+                                    }
                                 } else {
-                                    sendMsg("Неверный логин/пароль или данный логин уже используется!");
+                                    sendMsg("Неверный логин/пароль!");
                                 }
                             }
                         }
                         // цикл для работы
                         while (true) {
                             String str = in.readUTF();
-
-                            if (str.equals("/end")) {
-                                out.writeUTF("/serverClosed");
-                                break;
-                            }
-                            if (!str.startsWith("/w")) {
-                                server.broadCastMsg(nick + ": " + str);
-                            } else {
-                                String msg = str.replaceAll("^\\D+\\S"," ");
-                                String[] allData = str.split(" ");
-                                String nickNameForPrivate = allData[1];
-                                if (!nickNameForPrivate.isEmpty()) {
-                                    server.sentPrivateMsg(nickNameForPrivate, "This is the private massage from: "+ nick + ": "+ msg);
-                                    server.sentPrivateMsg(nick,"Private massage to "+ nickNameForPrivate + ": " + msg);
-                                } else {
-                                    sendMsg("Неверный пользователь!");
+                            if (str.startsWith("/")) {
+                                if (str.equals("/end")) {
+                                    out.writeUTF("/serverClosed");
                                 }
+                                if (str.startsWith("/w ")) {
+                                    String[] tokens = str.split(" ", 3);
+                                    server.sentPrivateMsg(ClientHandler.this, tokens[1], tokens[2]);
+                                }
+                                if (str.startsWith("/blacklist ")) {
+                                    String[] tokens = str.split(" ");
+                                    blackList.add(tokens[1]);
+                                    sendMsg("Вы добавили пользователя " + tokens[1] + " в черный список");
+                                }
+                            } else {
+                                server.broadcastMsg(ClientHandler.this, nick + ": " + str);
                             }
                         }
                     } catch (IOException e) {
@@ -108,6 +110,10 @@ public class ClientHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean checkBlackList(String nick) {
+        return blackList.contains(nick);
     }
 }
 

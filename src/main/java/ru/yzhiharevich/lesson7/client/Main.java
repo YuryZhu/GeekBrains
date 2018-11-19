@@ -8,8 +8,10 @@ import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 
-public class Main extends Application {
+import java.util.Timer;
 
+public class Main extends Application {
+    static Timer timer = new Timer();
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
@@ -18,6 +20,7 @@ public class Main extends Application {
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
+        new Controller().myTimerTask(timer);
     }
 
     public static void main(String[] args) {
