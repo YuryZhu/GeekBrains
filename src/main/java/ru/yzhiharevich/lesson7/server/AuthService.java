@@ -1,6 +1,7 @@
 package ru.yzhiharevich.lesson7.server;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class AuthService {
     private static Connection connection;
@@ -27,8 +28,28 @@ public class AuthService {
         try {
             ResultSet rs = stmt.executeQuery(sql);
 
-            if(rs.next()) {
+            if (rs.next()) {
                 return rs.getString(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String setBlackList(String nickName, String nickNameWillBlocked) {
+        String sql = String.format("SELECT whoBlocked from  blacklist where nick ='%s' and  whoBlocked='%s'", nickName, nickNameWillBlocked);
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                return rs.getString(1);
+            } else {
+                sql = String.format("INSERT into blacklist (nick,whoBlocked) " +
+                        "VALUES('%s', '%s')", nickName, nickNameWillBlocked);
+                stmt.executeQuery(sql);
+                return "Пользователь добавлен в блок лист";
             }
 
         } catch (SQLException e) {
@@ -46,4 +67,18 @@ public class AuthService {
         }
     }
 
+    public static boolean getIfNickInBlackList(String nickName, String nickNameWillBlocked) {
+        String sql = String.format("SELECT whoBlocked from  blacklist " +
+                "where nick ='%s' and  whoBlocked='%s')", nickName, nickNameWillBlocked);
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

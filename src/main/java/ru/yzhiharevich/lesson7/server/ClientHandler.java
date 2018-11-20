@@ -64,7 +64,11 @@ public class ClientHandler {
                                 }
                                 if (str.startsWith("/blacklist ")) {
                                     String[] tokens = str.split(" ");
+                                    String answer = AuthService.setBlackList(ClientHandler.this.getNick(), tokens[1]);
                                     blackList.add(tokens[1]);
+                                    if (answer.equals(tokens[1])){
+                                        sendMsg("Пользователь " + tokens[1] + " уже есть в черном списке");
+                                    }
                                     sendMsg("Вы добавили пользователя " + tokens[1] + " в черный список");
                                 }
                             } else {
@@ -113,7 +117,8 @@ public class ClientHandler {
     }
 
     public boolean checkBlackList(String nick) {
-        return blackList.contains(nick);
+        boolean answer =AuthService.getIfNickInBlackList(ClientHandler.this.getNick(), nick);
+        return  answer;
     }
 }
 
