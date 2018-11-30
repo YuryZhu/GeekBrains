@@ -5,15 +5,16 @@ import java.util.Scanner;
 
 
 public class BookReader {
-    public void readConsole(){
+    public void readConsole() {
         Scanner in = new Scanner(System.in);
         System.out.println("Напишите номер страницы");
         int page = Integer.parseInt(in.nextLine());
         readTheBook(page);
     }
-    public void readTheBook(int page){
+
+    public void readTheBook(int page) {
         String FILENAME = "123/пушкин.txt";
-        int skip = page*1800;
+        int skip = page * 1800;
         long t = System.currentTimeMillis();
         try (FileInputStream in = new FileInputStream(FILENAME)) {
             in.skip(skip);
@@ -28,6 +29,7 @@ public class BookReader {
         } catch (
                 IOException e) {
             e.printStackTrace();
-        }System.out.println("\n" + "\n" +(System.currentTimeMillis() - t));
+        }
+        System.out.println("\n" + "\n" + (System.currentTimeMillis() - t));
     }
 }

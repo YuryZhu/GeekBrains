@@ -4,7 +4,7 @@ import java.io.*;
 
 public class FileReaderOwn {
     public void readFile() {
-        try (FileInputStream in = new FileInputStream("123/50byte.dz")){
+        try (FileInputStream in = new FileInputStream("123/50byte.dz")) {
             byte[] arr = new byte[1];
             int x;
             while ((x = in.read(arr)) > 0) {
