@@ -1,4 +1,4 @@
-package ru.yzhiharevich.marathon_lesson1;
+package ru.yzhiharevich.java3_lesson6;
 
 import static ru.yzhiharevich.java3_lesson6.MainTesting.getSymbolsAfterFour;
 import static ru.yzhiharevich.java3_lesson6.MainTesting.checkArrayWithOneAndFour;
